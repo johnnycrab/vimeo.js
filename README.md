@@ -15,7 +15,7 @@ There is a lot of information about the Vimeo API at https://developer.vimeo.com
 
 # Creating your Vimeo library
 
-All API requests, and examples in this file must create a Vimeo object. Your ```CLIENT_ID``` and ```CLIENT_SECRET``` can be found on your app page under the OAuth 2 tab. If you have not yet created an API App with vimeo, you can create one at https://developer.vimeo.com/api/apps.
+All API requests, and examples in this file must create a Vimeo object. Your ```CLIENT_ID``` and ```CLIENT_SECRET``` can be found on your app page under the Authentication tab. If you have not yet created an API App with vimeo, you can create one at https://developer.vimeo.com/apps.
 
 You can optionally provide an ACCESS_TOKEN to the constructor. This parameter is optional, and provided as a convenience. Access tokens are only required to [make requests](#make-requests), and can be set later through the `access_token` property.
 
@@ -148,36 +148,41 @@ headers     | object   | An object containing all of the response headers.
 
 
 # Upload Videos
-The API library has a ````streamingUpload```` method which takes three parameters.
+The API library has a ````streamingUpload```` method which takes four parameters.
 
 Name      | Type     | Description
 ----------|----------|------------
 file      | string   | Full path to the upload file on the local system
 video_uri | string   | (Optional) Uri of an existing video. If provided, the uploaded video will replace the source file of this video.
 callback  | function | A callback that will be executed when the upload is comple, or has failed. It will match the callback of an [API request](#callback).
+progress_callback | function | A callback that will be executed periodically during the file upload. This callback receives two parameters, the total bytes uploaded and the total file size. Note that `console.log` is slow, and frequent logs can negatively impact your performance speed.
 
 **Upload**
 
     lib.streamingUpload('/home/aaron/Downloads/ada.mp4',  function (error, body, status_code, headers) {
         if (error) {
-            return throw error;
+            throw error;
         }
         
         lib.request(headers.location, function (error, body, status_code, headers) {
             console.log(body);
         });
+    }, function (upload_size, file_size) {
+        console.log("You have uploaded " + Math.round((uploaded_size/file_size) * 100) + "% of the video");
     });
 
 **Replace**
 
     lib.streamingUpload('/home/aaron/Downloads/ada.mp4', '/videos/12345',  function (error, body, status_code, headers) {
         if (error) {
-            return throw error;
+            throw error;
         }
         
         lib.request(headers.location, function (error, body, status_code, headers) {
             console.log(body);
         });
+    }, function (upload_size, file_size) {
+        console.log("You have uploaded " + Math.round((uploaded_size/file_size) * 100) + "% of the video");
     });
 
 # Contributors
@@ -186,3 +191,8 @@ callback  | function | A callback that will be executed when the upload is compl
 - [greedo](https://github.com/greedo)
 - [AidenMontgomery](https://github.com/AidenMontgomery) [[ced26262d710abe462ecc8a8a9ea97aff825e026](https://github.com/vimeo/vimeo.js/commit/ced26262d710abe462ecc8a8a9ea97aff825e026)]
 - [Craig Rogers](https://github.com/twentyrogersc) Thanks for the name!
+- [Jonathan Pirnay](https://github.com/johnnycrab)
+- [gino8080](https://github.com/gino8080)
+- [Zena Hirsch](https://github.com/zenahirsch)
+
+

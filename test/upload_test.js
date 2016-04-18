@@ -11,14 +11,17 @@ DO_API = false;
 
 /*api.request({
 	method: 'GET',
-	path: '/me'
+	path: '/videso/124449369/videos',
+	query: {
+		filter: 'foobar'
+	}
 }, function (err, body, status_code, headers) {
 	console.log(err);
 	console.log(status_code);
 	console.log(headers);
 });*/
 
-if (DO_PUT) {
+/*if (DO_PUT) {
 	api.request({
 		method: 'PUT',
 		path: '/videos/124449369/presets/120080237'
@@ -105,11 +108,11 @@ if (DO_API) {
 				console.log('status code domain');
 				console.log(sc);
 			});
-		}*/
+		}
 	});
-}
+}*/
 
-/*api.streamingUpload(path.resolve(__dirname, 'michele_pedrazzi.mp4'), function (error, body, status_code, headers) {
+api.streamingUpload(path.resolve(__dirname, 'michele_pedrazzi.mp4'), function (error, body, status_code, headers) {
 	if (error) {
 		console.log('-------');
 		console.log('Error:')
@@ -141,4 +144,4 @@ if (DO_API) {
 		console.log(headers);
 		console.log('-------');
 	}
-});*/
+});
